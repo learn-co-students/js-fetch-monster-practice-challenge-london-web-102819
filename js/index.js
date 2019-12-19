@@ -14,6 +14,20 @@ backButton.innerHTML = "Back";
 const forwardButton = document.querySelector("#forward");
 forwardButton.innerHTML = "Forward";
 
+backButton.addEventListener("click", () => {
+  pageDown();
+}),
+  forwardButton.addEventListener("click", () => {
+    pageUp();
+  });
+
+(pageUp = () => {
+  page++, fetchData(page);
+}),
+  (pageDown = () => {
+    1 < page ? (page--, fetchData(page)) : alert("Aint no monsters here");
+  });
+
 // //////
 
 const addForm = document.createElement("form");
@@ -60,7 +74,7 @@ addForm.addEventListener("submit", e => {
 // creating container where monsters will be displayed
 
 const fetchData = a => {
-  fetch(MONSTERS + `${LIMIT}${a}`)
+  fetch(MONSTERS + `${LIMIT}${page}`)
     .then(resp => resp.json())
     .then(data => loop(data));
 };
