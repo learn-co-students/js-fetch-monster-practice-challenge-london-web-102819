@@ -2,13 +2,6 @@ const ALL_MOSTER_URL = "http://localhost:3000/monsters";
 const MONSTER_URL = `${ALL_MOSTER_URL}/?_limit=50&_page=`;
 let PAGE = 1;
 
-document.addEventListener("DOMContentLoaded", () => {
-  loadMonsters();
-  addNewMonster();
-  goBack();
-  goForward();
-});
-
 const loadMonsters = (page = PAGE) => {
   fetch(MONSTER_URL + page)
     .then(resp => resp.json())
@@ -63,14 +56,12 @@ const goBack = () => {
       PAGE--;
       loadMonsters(PAGE);
     }
+    if (PAGE <= 1) {
+      window.alert("This is the page, you can click '=>' to go to next page");
+      document.querySelector("#back").disabled = true;
+    }
   });
 };
-
-// window.alert("there is no page").then(() => {
-//   setTimeout(() => {
-//     window.alert.remove();
-//   }, 3000);
-// });
 
 // monster form
 const createMonsterDiv = document.querySelector("#create-monster");
@@ -129,3 +120,10 @@ const addNewMonster = () => {
       });
   });
 };
+
+document.addEventListener("DOMContentLoaded", () => {
+  loadMonsters();
+  addNewMonster();
+  goBack();
+  goForward();
+});
